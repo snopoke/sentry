@@ -104,7 +104,6 @@ export type Relay = {
  * Lightweight in this case means it does not contain `projects` or `teams`
  */
 export type LightWeightOrganization = OrganizationSummary & {
-  relayPiiConfig: string;
   scrubIPAddresses: boolean;
   attachmentsRole: string;
   eventsMemberAdmin: boolean;
@@ -131,8 +130,9 @@ export type LightWeightOrganization = OrganizationSummary & {
   dataScrubberDefaults: boolean;
   dataScrubber: boolean;
   onboardingTasks: OnboardingTaskStatus[];
-  trustedRelays: Relay[];
   role?: string;
+  trustedRelays: string[];
+  relayPiiConfig: string;
 };
 
 /**
