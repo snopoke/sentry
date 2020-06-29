@@ -130,9 +130,9 @@ export type LightWeightOrganization = OrganizationSummary & {
   dataScrubberDefaults: boolean;
   dataScrubber: boolean;
   onboardingTasks: OnboardingTaskStatus[];
-  role?: string;
-  trustedRelays: string[];
   relayPiiConfig: string;
+  trustedRelays: Relay[];
+  role?: string;
 };
 
 /**

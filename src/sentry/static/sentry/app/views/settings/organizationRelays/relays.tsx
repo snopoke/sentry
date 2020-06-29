@@ -38,6 +38,11 @@ type State = AsyncComponent['state'] & {
 };
 
 class Relays extends AsyncComponent<Props, State> {
+  constructor(props: Props, context: AsyncComponent['context']) {
+    super(props, context);
+    this.handleOpenAddDialog = this.handleOpenAddDialog.bind(this);
+  }
+
   getDefaultState() {
     return {
       ...super.getDefaultState(),
