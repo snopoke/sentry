@@ -38,7 +38,7 @@ type State = {
   displayEventId: boolean;
 };
 
-class Form extends React.Component<Props<Rule, KeysOfUnion<Rule>>, State> {
+class Form extends React.Component<Props<Values, KeysOfUnion<Values>>, State> {
   state: State = {displayEventId: !!this.props.eventId?.value};
 
   handleChange = <K extends keyof Values>(field: K) => (
