@@ -100,9 +100,7 @@ class DataScrubbing<T extends ProjectId = undefined> extends React.Component<
     const {onSubmitSuccess} = this.props;
     this.setState({rules: convertRelayPiiConfig(response.relayPiiConfig)});
     addSuccessMessage(successMessage);
-    if (onSubmitSuccess) {
-      onSubmitSuccess(response);
-    }
+    onSubmitSuccess?.(response);
   }
 
   handleOpenAddModal = () => {
