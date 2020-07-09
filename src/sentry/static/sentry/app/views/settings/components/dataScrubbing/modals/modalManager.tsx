@@ -12,7 +12,7 @@ import {
   RuleType,
   MethodType,
   Rule,
-  ProjectSlug,
+  ProjectId,
   KeysOfUnion,
   EventIdStatus,
 } from '../types';
@@ -28,13 +28,13 @@ type Values = FormProps['values'];
 type EventId = NonNullable<FormProps['eventId']>;
 type SourceSuggestions = FormProps['sourceSuggestions'];
 
-type Props<T extends ProjectSlug> = ModalRenderProps & {
+type Props<T extends ProjectId> = ModalRenderProps & {
   onSubmitSuccess: (data: T extends undefined ? Organization : Project) => void;
   orgSlug: Organization['slug'];
   api: Client;
   endpoint: string;
   savedRules: Array<Rule>;
-  projectSlug?: T;
+  projectId?: T;
 };
 
 type State = {
@@ -48,7 +48,7 @@ type State = {
 };
 
 class ModalManager<
-  T extends ProjectSlug = undefined,
+  T extends ProjectId = undefined,
   P extends Props<T> = Props<T>,
   S extends State = State
 > extends React.Component<P, S> {
@@ -121,7 +121,7 @@ class ModalManager<
   }
 
   async loadSourceSuggestions() {
-    const {orgSlug, projectSlug, api} = this.props;
+    const {orgSlug, projectId, api} = this.props;
     const {eventId} = this.state;
 
     if (!eventId.value) {
@@ -145,8 +145,8 @@ class ModalManager<
 
     try {
       const query: {projectId?: string; eventId: string} = {eventId: eventId.value};
-      if (projectSlug) {
-        query.projectId = projectSlug;
+      if (projectId) {
+        query.projectId = projectId;
       }
       const rawSuggestions = await api.requestPromise(
         `/organizations/${orgSlug}/data-scrubbing-selector-suggestions/`,

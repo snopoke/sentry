@@ -1,9 +1,9 @@
 import {t} from 'app/locale';
 
 import ModalManager from './modalManager';
-import {ProjectSlug, Rule} from '../types';
+import {ProjectId, Rule} from '../types';
 
-class Add<T extends ProjectSlug> extends ModalManager<T> {
+class Add<T extends ProjectId> extends ModalManager<T> {
   getTitle() {
     return t('Add an advanced data scrubbing rule');
   }

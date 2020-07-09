@@ -2,7 +2,7 @@ import React from 'react';
 
 import {mountWithTheme} from 'sentry-test/enzyme';
 
-import Rules from 'app/views/settings/components/dataScrubbing/rulesList';
+import Rules from 'app/views/settings/components/dataScrubbing/rules';
 import convertRelayPiiConfig from 'app/views/settings/components/dataScrubbing/convertRelayPiiConfig';
 
 // @ts-ignore
@@ -37,11 +37,7 @@ describe('Rules', () => {
 
   it('render edit and delete buttons', () => {
     const wrapper = mountWithTheme(
-      <Rules
-        rules={rules}
-        onShowEditRuleModal={handleShowEditRule}
-        onDeleteRule={handleDelete}
-      />
+      <Rules rules={rules} onEditRule={handleShowEditRule} onDeleteRule={handleDelete} />
     );
     expect(wrapper.find('[aria-label="Edit Rule"]').hostNodes()).toHaveLength(2);
     expect(wrapper.find('[aria-label="Delete Rule"]').hostNodes()).toHaveLength(2);
@@ -51,7 +47,7 @@ describe('Rules', () => {
     const wrapper = mountWithTheme(
       <Rules
         rules={rules}
-        onShowEditRuleModal={handleShowEditRule}
+        onEditRule={handleShowEditRule}
         onDeleteRule={handleDelete}
         disabled
       />
@@ -75,7 +71,7 @@ describe('Rules', () => {
 
   it('render edit button only', () => {
     const wrapper = mountWithTheme(
-      <Rules rules={rules} onShowEditRuleModal={handleShowEditRule} />
+      <Rules rules={rules} onEditRule={handleShowEditRule} />
     );
     expect(wrapper.find('[aria-label="Edit Rule"]').hostNodes()).toHaveLength(2);
     expect(wrapper.find('[aria-label="Delete Rule"]')).toHaveLength(0);

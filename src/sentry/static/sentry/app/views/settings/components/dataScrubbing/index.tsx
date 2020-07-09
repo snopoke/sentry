@@ -14,7 +14,7 @@ import {openModal} from 'app/actionCreators/modal';
 import Edit from './modals/edit';
 import Add from './modals/add';
 import OrganizationRules from './organizationRules';
-import {Rule, ProjectSlug} from './types';
+import {Rule, ProjectId} from './types';
 import convertRelayPiiConfig from './convertRelayPiiConfig';
 import submitRules from './submitRules';
 import Content from './content';
@@ -22,11 +22,11 @@ import Content from './content';
 const ADVANCED_DATASCRUBBING_LINK =
   'https://docs.sentry.io/data-management/advanced-datascrubbing/';
 
-type Props<T extends ProjectSlug> = {
+type Props<T extends ProjectId> = {
   endpoint: string;
   organization: Organization;
   onSubmitSuccess?: (data: T extends undefined ? Organization : Project) => void;
-  projectSlug?: T;
+  projectId?: T;
   relayPiiConfig?: string;
   additionalContext?: React.ReactNode;
   disabled?: boolean;
@@ -39,7 +39,7 @@ type State = {
   relayPiiConfig?: string;
 };
 
-class DataScrubbing<T extends ProjectSlug = undefined> extends React.Component<
+class DataScrubbing<T extends ProjectId = undefined> extends React.Component<
   Props<T>,
   State
 > {
@@ -68,9 +68,9 @@ class DataScrubbing<T extends ProjectSlug = undefined> extends React.Component<
   api = new Client();
 
   loadOrganizationRules() {
-    const {organization, projectSlug} = this.props;
+    const {organization, projectId} = this.props;
 
-    if (projectSlug) {
+    if (projectId) {
       try {
         this.setState({
           orgRules: convertRelayPiiConfig(organization.relayPiiConfig),
@@ -110,7 +110,7 @@ class DataScrubbing<T extends ProjectSlug = undefined> extends React.Component<
     openModal(modalProps => (
       <Add
         {...modalProps}
-        projectSlug={this.props.projectSlug}
+        projectId={this.props.projectId}
         savedRules={rules}
         api={this.api}
         endpoint={this.props.endpoint}
@@ -128,7 +128,7 @@ class DataScrubbing<T extends ProjectSlug = undefined> extends React.Component<
       <Edit
         {...modalProps}
         rule={rules[id]}
-        projectSlug={this.props.projectSlug}
+        projectId={this.props.projectId}
         savedRules={rules}
         api={this.api}
         endpoint={this.props.endpoint}
@@ -158,7 +158,7 @@ class DataScrubbing<T extends ProjectSlug = undefined> extends React.Component<
   };
 
   render() {
-    const {additionalContext, disabled, projectSlug} = this.props;
+    const {additionalContext, disabled, projectId} = this.props;
     const {orgRules, rules} = this.state;
 
     return (
@@ -179,7 +179,7 @@ class DataScrubbing<T extends ProjectSlug = undefined> extends React.Component<
             })}
           </PanelAlert>
           <PanelBody>
-            {projectSlug && <OrganizationRules rules={orgRules} />}
+            {projectId && <OrganizationRules rules={orgRules} />}
             <Content
               rules={rules}
               onDeleteRule={this.handleDelete}
